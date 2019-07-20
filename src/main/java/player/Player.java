@@ -17,7 +17,7 @@ public class Player {
     private final String name;
     private List<Card> cardList;
     @Getter
-    private boolean isFinished = false;
+    private boolean isFinished;
 
     public Player(int i) {
         this.name = DEFAULT_NAME + i;
@@ -68,8 +68,7 @@ public class Player {
 
     private Card supplyCard() {
         Collections.shuffle(this.cardList);
-        Card card = this.cardList.get(0);
-        this.cardList.remove(0);
+        Card card = this.cardList.remove(0);
         this.isFinished = this.cardList.isEmpty();
         return card;
     }

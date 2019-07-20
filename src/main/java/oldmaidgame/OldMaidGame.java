@@ -1,6 +1,5 @@
 package oldmaidgame;
 
-import card.Card;
 import card.Deck;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +21,7 @@ public class OldMaidGame {
      * @return ゲーム終了までにかかったターン数
      */
     public int start() {
-        Deck deck = new Deck();
+        Deck deck = new Deck(1);
         Player[] players = IntStream.rangeClosed(1, playerCnt).mapToObj(i -> new Player(i)).toArray(Player[]::new);
         initPlayerHand(players, deck);
 
@@ -40,8 +39,8 @@ public class OldMaidGame {
     }
 
     private void initPlayerHand(Player[] players, Deck deck) {
-        int base = Card.MAX_SIZE / playerCnt;
-        int fraction = Card.MAX_SIZE % playerCnt;
+        int base = deck.getMaxSize() / playerCnt;
+        int fraction = deck.getMaxSize() % playerCnt;
         for (Player player : players) {
             if (fraction-- > 0) {
                 player.draw(deck, base + 1);
