@@ -22,7 +22,7 @@ public class Deck {
     }
 
     public Deck(int addJokers) {
-        IntStream.range(0, addJokers).forEach(i -> bill.add(new Card(Suit.JOKER, 0)));
+        if (addJokers > 0) IntStream.range(0, addJokers).forEach(i -> bill.add(new Card(Suit.JOKER, 0)));
         Collections.shuffle(bill);
         maxSize = bill.size();
     }
