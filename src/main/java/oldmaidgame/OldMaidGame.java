@@ -22,7 +22,7 @@ public class OldMaidGame {
      */
     public int start() {
         Deck deck = new Deck(1);
-        List<Player>  players = IntStream.rangeClosed(1, playerCnt).mapToObj(i -> new Player(i)).collect(Collectors.toList());
+        List<Player> players = IntStream.rangeClosed(1, playerCnt).mapToObj(i -> new Player(i)).collect(Collectors.toList());
         initPlayerHand(players, deck);
         players.removeAll(players.stream().filter(p -> p.getCardList().isEmpty()).collect(Collectors.toList()));
 
@@ -31,7 +31,7 @@ public class OldMaidGame {
             Player drawer = players.get(turnCnt % players.size());
             Player target = players.get((turnCnt + 1) % players.size());
             Card drawCard = drawer.draw(target);
-            throwPairCard(drawer,drawCard);
+            throwPairCard(drawer, drawCard);
             if (drawer.getCardList().isEmpty()) players.remove(drawer);
             if (target.getCardList().isEmpty()) players.remove(target);
         }
@@ -51,18 +51,14 @@ public class OldMaidGame {
         players.forEach(p -> initThrowPairCard(p));
     }
 
-    /**
-     * 手札でペアとなったカードを捨てる
-     * @param p プレイヤー
-     */
-    public void initThrowPairCard(Player p) {
+    private void initThrowPairCard(Player p) {
         List<Card> handCardList = p.getCardList();
         List<Card> discardedList = Lists.newArrayList();
-        for(Card card1 : handCardList){
+        for (Card card1 : handCardList) {
             if (discardedList.contains(card1)) continue;
-            for(Card card2 : handCardList){
+            for (Card card2 : handCardList) {
                 if (card1 == card2 || discardedList.contains(card2)) continue;
-                if (card1.getRank() == card2.getRank()){
+                if (card1.getRank() == card2.getRank()) {
                     discardedList.add(card1);
                     discardedList.add(card2);
                     break;
@@ -72,12 +68,7 @@ public class OldMaidGame {
         handCardList.removeAll(discardedList);
     }
 
-    /**
-     * 手札でペアとなったカードを捨てる
-     *
-     * @param p プレイヤー
-     */
-    public void throwPairCard(Player p, Card drawCard) {
+    private void throwPairCard(Player p, Card drawCard) {
         List<Card> handCardList = p.getCardList();
         for (Card handCard : handCardList) {
             if (drawCard == handCard) continue;

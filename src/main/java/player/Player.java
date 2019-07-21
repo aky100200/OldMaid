@@ -24,6 +24,7 @@ public class Player {
 
     /**
      * 山札からカードを引く
+     *
      * @param deck 山札
      * @param i    引く枚数
      */
@@ -36,6 +37,7 @@ public class Player {
 
     /**
      * 他プレイヤーの手札からカードを引く
+     *
      * @param target カードを引く対象プレイヤー
      */
     public Card draw(Player target) {
@@ -45,10 +47,10 @@ public class Player {
     }
 
     protected Card supplyCard() {
-        return supplyCard(0,true);
+        return supplyCard(0, true);
     }
 
-    private Card supplyCard(int index , boolean isShuffle) {
+    private Card supplyCard(int index, boolean isShuffle) {
         if (isShuffle) Collections.shuffle(this.cardList);
         return this.cardList.remove(index);
     }
