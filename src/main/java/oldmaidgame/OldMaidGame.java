@@ -27,15 +27,16 @@ public class OldMaidGame {
         players.removeAll(players.stream().filter(p -> p.getCardList().isEmpty()).collect(Collectors.toList()));
 
         int turnCnt = 0;
-        for (; 1 < players.size(); turnCnt++) {
-            Player drawer = players.get(turnCnt % players.size());
-            Player target = players.get((turnCnt + 1) % players.size());
+        for (int cnt = 0 ; 1 < players.size(); cnt++) {
+            if (cnt % players.size() == 0) turnCnt++;
+            Player drawer = players.get(cnt % players.size());
+            Player target = players.get((cnt + 1) % players.size());
             Card drawCard = drawer.draw(target);
             throwPairCard(drawer, drawCard);
             if (drawer.getCardList().isEmpty()) players.remove(drawer);
             if (target.getCardList().isEmpty()) players.remove(target);
         }
-        return turnCnt / playerCnt;
+        return turnCnt;
     }
 
     private void initPlayerHand(List<Player> players, Deck deck) {

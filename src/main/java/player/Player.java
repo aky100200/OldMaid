@@ -5,8 +5,8 @@ import card.Deck;
 import com.google.common.collect.Lists;
 import lombok.Getter;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.IntStream;
 
 @Getter
@@ -16,10 +16,12 @@ public class Player {
 
     private final String name;
     private List<Card> cardList;
+    private final Random rand;
 
     public Player(int i) {
         this.name = DEFAULT_NAME + i;
         this.cardList = Lists.newArrayList();
+        this.rand = new Random();
     }
 
     /**
@@ -46,13 +48,14 @@ public class Player {
         return card;
     }
 
-    protected Card supplyCard() {
-        return supplyCard(0, true);
+    protected Card supplyCard() { return supplyCard(true); }
+
+    protected Card supplyCard(boolean isRand) {
+        int index = isRand ? rand.nextInt(cardList.size()) : 0;
+        return supplyCard(index);
     }
 
-    private Card supplyCard(int index, boolean isShuffle) {
-        if (isShuffle) Collections.shuffle(this.cardList);
+    private Card supplyCard(int index) {
         return this.cardList.remove(index);
     }
-
 }
